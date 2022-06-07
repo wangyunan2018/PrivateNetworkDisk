@@ -1,0 +1,42 @@
+{{define "view/file.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/pulic_clean_style.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <title>文件列表</title>
+    <style>
+        .file_style {
+            width: 80px;
+            height: 80px;
+            line-height: 50px;
+        }
+        .file_style a {
+            color: blue;
+            background-color: #ded1de;
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #c9bfc9;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 载入公共头部 -->
+    {{template "view/header.html"}}
+    <div>
+        <h2>{{.username}}</h2><br><br>
+        <h3>{{.filelist}}</h3>
+        <ul>
+            <li>{{.message}}</li>
+        </ul>
+    </div>
+    <div class="file_style"><a href="/v1/home">返回</a></div>
+</body>
+</html>
+{{end}}

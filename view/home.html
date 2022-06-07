@@ -1,0 +1,62 @@
+{{ define "view/home.html" }} <!-- 有分层HTML模板目录存在的时候就需要按需加载模板 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/pulic_clean_style.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <title>{{.title}}</title>
+</head>
+<body>
+    <div id="wrap">
+       <!-- 引入公共header -->
+       {{template "view/header.html"}}
+        <!-- content -->
+        <div id="content">
+            <div class="conten_left_menu">
+                <ul class="content_left_ul"  onclick="changeLiOne()">
+                    <li><a href="#">全部文件</a></li>
+                    <li><a href="#">最近</a></li>
+                    <li><a href="#">传输记录</a></li>
+                    <li><a href="#">收藏</a></li>
+                    <li><a href="#">回收站</a></li>
+                </ul>
+                <div class="conten_left_other">
+                    <!-- <p><a href="#">回收站</a></p> -->
+                    <p class="p_capacity">容量：<span>1050GB</span><span>/2000GB</span></p>
+                </div>
+            </div>
+            <script>
+                function changeLiOne() {
+                    var li_one = document.getElementsByTagName("li")
+                    var i = 0
+                    for (i = 0;i<li_one.length;i++) {
+                        li_one[i].onclick = function() {
+                            for (i = 0; i<li_one.length; i++)  li_one[i].className = ""
+                            this.className = "cur"
+                            if (li_one[i] > li_one.length) {
+                                this.className = ""
+                            }
+                        }
+                    }
+                }
+            </script> 
+        </div>
+        <div id="content_right"> 
+            <ul>
+                <li>
+                    <form action="/admin/upload" method="post" enctype="multipart/form-data">
+                        用户：<input type="text" name="username" placeholder="用户名"><br><br>
+                        文件名：<input type="file" name="filename" id=""><br><br>
+                        提交：<input type="submit">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+{{ end }}

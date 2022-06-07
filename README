@@ -1,0 +1,15 @@
+创建数据库：
+create database private_network_disk default character set utf8 default collate utf8_general_ci;
+
+授予数据库全部权限：
+grant all on *.* to root@'%' identified by '1234';
+flush privileges;
+
+创建用户表：
+create table if not exists `networkdisk_users`(
+	`id` int unsigned auto_increment comment "用户ID",
+	`username` varchar(40) not null comment "用户名",
+	`password` varchar(30) not null comment "密码",
+	`submission_date` DATE,
+	PRIMARY KEY(`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

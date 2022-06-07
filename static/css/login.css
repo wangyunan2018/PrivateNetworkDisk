@@ -1,0 +1,49 @@
+body {
+    background-image: url(/static/img/login_backup_image1.jpg);
+    position: relative;
+}
+
+#wrap {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.content form input,.content button {
+    margin: 5px;
+}
+
+.content h1 {
+    margin-bottom:  70px;
+    color:white;
+
+}
+
+.content form input {
+    border: 2px solid #C0C0C0;
+    height: 20px;
+}
+
+.content button {
+    width: 70px;
+    height: 35px;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    background: #DDDDDD;
+    margin-bottom: 10px;
+}
+
+.content .login_p1 :first-child {
+    color:red;
+}
+
+.content .login_p1 a {
+    padding-left: 10px;
+    color: blue;
+    
+}

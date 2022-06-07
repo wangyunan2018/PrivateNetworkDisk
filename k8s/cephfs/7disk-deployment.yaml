@@ -1,0 +1,85 @@
+---
+# 创建一个pvc
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: ceph-pvc-disk
+  namespace: private-disk
+  annotations:
+    volume.beta.kubernetes.io/storage-class: cephfs-disk
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: disk-pod
+  labels:
+    disk: private
+  namespace: private-disk
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      disk: private
+  template:
+    metadata:
+      labels:
+        disk: private
+    spec:
+      imagePullSecrets:
+      - name: disk-secret
+      containers:
+      - image: registry.cn-chengdu.aliyuncs.com/wangyunan_images/private-network-disk:v6
+        name: web-disk
+        ports:
+        - name: disk-port
+          containerPort: 8989
+#        resources:
+#          requests:
+#            cpu: 1000m
+#            memory: 2048Mi
+#          limits:
+#            cpu: 2000m
+#            memory: 4096Mi
+        volumeMounts:
+          - name: disk-mount
+            mountPath: /go/src/my-network-disk
+      volumes:
+        - name: disk-mount
+          # hostPath:
+            # 挂载到本地路径后，需要把项目导入到本地路径里面去，否则pod会创建失败
+            # path: /go/src/my-network-disk
+          persistentVolumeClaim:
+            # 如果映射的是项目启动目录，需要在nfs/cephfs pod创建好后手动把数据导入到指定的nfs存储目录里面
+            claimName: ceph-pvc-disk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # 这里的service name需要填在ingress.yaml中的service name里。
+  name: disk-svc
+  namespace: private-disk
+spec:
+  selector:
+    disk: private
+  ports:
+  - name: http
+    port: 8989
+    targetPort: 8989
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: disk-secret
+  namespace: private-disk
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5jbi1jaGVuZ2R1LmFsaXl1bmNzLmNvbSI6IHsKCQkJImF1dGgiOiAiNWIrOTVhYUM1TGlBNWFTYzVwaWw2YU9PNXAybDVaR0FPbmRoYm1kNWRXNWhiakl3TVRJPSIKCQl9Cgl9Cn0=
+type: kubernetes.io/dockerconfigjson
+
+# 设置pod自动扩容或缩容：kubectl autoscale deployment -n private-disk web-disk --cpu-percent=30 --max=5 --min=1
+# 升级：kubectl set image deployment -n private-disk disk-pod web-disk=registry.cn-chengdu.aliyuncs.com/wangyunan_images/private-network-disk:v5

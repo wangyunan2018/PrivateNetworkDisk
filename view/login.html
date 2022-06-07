@@ -1,0 +1,27 @@
+{{ define "view/login.html" }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/pulic_clean_style.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <title>{{ .title }}</title>
+</head>
+<body>
+    <div id="wrap">
+        <div class="content">
+            <h1>Private Network Disk</h1>
+            <form action="post">
+                <input type="text" placeholder="用户名" /><br>
+                <input type="text" placeholder="密码" />
+            </form>
+            <button type="button">登录</button>
+            <p class="login_p1"><a class="" href="#">忘记密码?</a><a href="register">注册</a></p>
+           
+        </div>
+    </div>
+</body>
+</html>
+{{ end }}

@@ -1,0 +1,34 @@
+{{define "view/header.html"}}
+    <div id="wrap">
+        <!-- hearder -->
+        <div id="header">
+            <div class="header_icon">
+                <img src="/static/img/disk1.jpg" alt="">
+                <h2>Private Network Disk</h2>
+            </div>
+            <div class="header_user_info">
+                <input type="text">
+                <button type="button">搜索</button>
+                <ul id="li_user_img" class="header_user_info_menu" onmouseover="changeImg('li_user_img','li_menu')" onmouseout="changeImg('li_user_img','li_menu')">
+                    <li><img src="/static/img/user1.jpeg" alt=""></li>
+                    <ul id="li_menu">
+                        <li><a href="#">个人信息</a></li>
+                        <li><a href="#">退出</a></li>
+                    </ul>  
+                </ul>
+            </div>
+            <script>
+                function changeImg(userImg,liMenu) {
+                    var user_img = document.getElementById(userImg)
+                    var li_menu = document.getElementById(liMenu)
+                    user_img.onmouseover = function() {
+                        li_menu.style.display = "block"
+                    }
+                    user_img.onmouseout = function() {
+                        li_menu.style.display = "none"
+                    }
+                }
+            </script>
+        </div>
+    </div>
+{{ end }}
